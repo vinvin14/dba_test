@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .container {
+            margin-top: 3%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Employee Summary Report</h2>
+        <div class="row mt-5">
+            <div class="col col-lg-4 col-md-12 col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-truncate">Newly Hired Employee</h5>
+                        <hr>
+                        <div class="my-2">
+                            <label for="">Number of Males</label>
+                            <input type="number" class="form-control" id="n-males">
+                        </div>
+                        <div class="my-2">
+                            <label for="">Number of Females</label>
+                            <input type="number" class="form-control" id="n-females">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-lg-4 col-md-12 col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-truncate">Permanent Employee</h5>
+                        <hr>
+                        <div class="my-2">
+                            <label for="">Number of Males</label>
+                            <input type="number" class="form-control" id="p-males">
+                        </div>
+                        <div class="my-2">
+                            <label for="">Number of Females</label>
+                            <input type="number" class="form-control" id="p-females">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-lg-4 col-md-12 col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-truncate">Resigned Employee</h5>
+                        <hr>
+                        <div class="my-2">
+                            <label for="">Number of Males</label>
+                            <input type="number" class="form-control" id="r-males">
+                        </div>
+                        <div class="my-2">
+                            <label for="">Number of Females</label>
+                            <input type="number" class="form-control" id="r-females">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2 my-4">
+            <button class="btn btn-success" id="generate">Generate Report</button>
+        </div>
+
+        <div class="result px-5 mb-4 bg-light rounded-3" style="display: none;">
+            <div class="container-fluid py-5">
+              <div class="row">
+                <div class="col">
+                    <div class="display-5">
+                        Thank you for your Input!
+                    </div>
+                    <div class="fst-italic">So far, you have entered:</div>
+                    <div class="fw-bold">For Permanent Employee(s)</div>
+                    <div class="div">
+                        <span id="pm-input"></span> total number of male(s) & <span id="pf-input"></span> total number of female(s)
+                    </div>
+                    <hr>
+                    <div class="fw-bold">For Newly Hire Employee(s)</div>
+                    <div class="div">
+                        <span id="nm-input"></span> total number of male(s) & <span id="nf-input"></span> total number of female(s)
+                    </div>
+                    <hr>
+                    <div class="fw-bold">For Resigned Employee</div>
+                    <div class="div">
+                        <span id="rm-input"></span> total number of male(s) & <span id="rf-input"></span> total number of female(s)
+                    </div>
+                </div>
+                <div class="col">
+                    <h1 class="display-5 fw-bold">Result</h1>
+              <p class="col-md-8 fs-4">
+                <div class="my-2">
+                    <div class="fw-bold">
+                        Number of hired employee = <span id="total-n"></span>
+                    </div>
+                    <div class="fst-italic">
+                        Male = <span id="n-pm"></span>% & Female = <span id="n-pf"></span>%
+                    </div>
+                </div>
+                <div class="my-2">
+                    <div class="fw-bold">
+                        Number of Permanent Employee = <span id="total-p"></span>
+                    </div>
+                    <div class="fst-italic">
+                        Male = <span id="p-pm"></span>% & Female = <span id="p-pf"></span>%
+                    </div>
+                </div>
+                <div class="my-2">
+                    <div class="fw-bold">
+                        Number of Resigned Employee = <span id="total-r"></span>
+                    </div>
+                    <div class="fst-italic">
+                        Male = <span id="r-pm"></span>% & Female = <span id="r-pf"></span>%
+                    </div>
+                </div>
+              </p>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $('#generate').click(function () {
+           
+            if (hasCompleteValue())
+            {
+                calc4new();
+                calc4permanent();
+                calc4resigned();
+                $('.result').show();
+            }
+            else
+            {
+                alert('Incomplete entry, please fill out all input field(s)!');
+            }
+            
+        });
+        
+        //methods
+        function calc4new()
+        {
+            var males = parseInt($('#n-males').val());
+            var females = parseInt($('#n-females').val());
+            var total = males + females;
+            var percentMales = males/total*100;
+            var percentFemales = females/total*100;
+            $('#total-n').text(total);
+            $('#n-pm').text(percentMales.toFixed(2));
+            $('#n-pf').text(percentFemales.toFixed(2));
+            $('#nm-input').text(males);
+            $('#nf-input').text(females);
+        }
+
+        function calc4permanent()
+        {
+            var males = parseInt($('#p-males').val());
+            var females = parseInt($('#p-females').val());
+            var total = males + females;
+            var percentMales = males/total*100;
+            var percentFemales = females/total*100;
+            $('#total-p').text(total);
+            $('#p-pm').text(percentMales.toFixed(2));
+            $('#p-pf').text(percentFemales.toFixed(2));
+            $('#pm-input').text(males);
+            $('#pf-input').text(females);
+        }
+
+        function calc4resigned()
+        {
+            var males = parseInt($('#r-males').val());
+            var females = parseInt($('#r-females').val());
+            var total = males + females;
+            var percentMales = males/total*100;
+            var percentFemales = females/total*100;
+            $('#total-r').text(total);
+            $('#r-pm').text(percentMales.toFixed(2));
+            $('#r-pf').text(percentFemales.toFixed(2));
+            $('#rm-input').text(males);
+            $('#rf-input').text(females);
+        }
+
+        function hasCompleteValue()
+        {
+            var nMales = $('#n-males').val();
+            var nFemales = $('#n-females').val();
+            var pMales = $('#p-males').val();
+            var pFemales = $('#p-females').val();
+            var rMales = $('#r-males').val();
+            var rFemales = $('#r-females').val();
+            
+            if (nMales === '' || nFemales === '' || 
+                nMales === '' || nFemales === '' || 
+                nMales === '' || nFemales === '')
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+    </script>
+    
+</body>
+</html>
